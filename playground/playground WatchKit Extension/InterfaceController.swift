@@ -11,7 +11,16 @@ import Foundation
 
 
 class InterfaceController: WKInterfaceController {
+    
+    enum modes {
+        case NOT_SET
+        case ADDITION
+        case SUBSTRACTION
+    }
     var labelString:String = "0"
+    var currentMode:modes = modes.NOT_SET
+    var savedNum:Int64 = 0
+    var lastButtonWasMode:Bool = false
 
     @IBOutlet var resultLabel: WKInterfaceLabel!
     @IBAction func taped7() {
@@ -49,8 +58,11 @@ class InterfaceController: WKInterfaceController {
     @IBAction func tapedMinus() {
     }
     @IBAction func tapedClear() {
-        labelString="0"
-        updateText()
+        savedNum = 0
+        labelString = "0"
+        resultLabel.setText("0")
+        currentMode = modes.NOT_SET
+        lastButtonWasMode = false
     }
     @IBAction func tapedEqual() {
     }
