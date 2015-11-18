@@ -49,6 +49,8 @@ class InterfaceController: WKInterfaceController {
     @IBAction func tapedMinus() {
     }
     @IBAction func tapedClear() {
+        labelString="0"
+        updateText()
     }
     @IBAction func tapedEqual() {
     }
