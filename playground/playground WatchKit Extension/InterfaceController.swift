@@ -11,6 +11,7 @@ import Foundation
 
 
 class InterfaceController: WKInterfaceController {
+    var labelString:String = "0"
 
     @IBOutlet var resultLabel: WKInterfaceLabel!
     @IBAction func taped7() {
@@ -53,7 +54,17 @@ class InterfaceController: WKInterfaceController {
     }
     
     func tappedChiffre(num:Int){
-        resultLabel.setText("\(num)")
+        labelString = labelString.stringByAppendingString("\(num)")
+        updateText()
+    }
+    
+    func updateText() {
+        guard let labelInt:Int64 = Int64(labelString)
+            else {
+                resultLabel.setText("number is too large")
+                return
+        }
+        resultLabel.setText("\(labelInt)")
     }
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
