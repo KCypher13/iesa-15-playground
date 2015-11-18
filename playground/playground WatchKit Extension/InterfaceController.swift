@@ -54,8 +54,10 @@ class InterfaceController: WKInterfaceController {
         tappedChiffre(6)
     }
     @IBAction func tapedPlus() {
+        changeMode(modes.ADDITION)
     }
     @IBAction func tapedMinus() {
+        changeMode(modes.SUBSTRACTION)
     }
     @IBAction func tapedClear() {
         savedNum = 0
@@ -67,6 +69,13 @@ class InterfaceController: WKInterfaceController {
     @IBAction func tapedEqual() {
     }
     
+    func changeMode(newMode:modes){
+        if savedNum == 0 {
+            return
+        }
+        currentMode = newMode
+        lastButtonWasMode = true
+    }
     func tappedChiffre(num:Int){
         labelString = labelString.stringByAppendingString("\(num)")
         updateText()
