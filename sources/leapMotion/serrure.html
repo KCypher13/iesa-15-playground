@@ -1,0 +1,88 @@
+<html>
+	<script src="http://js.leapmotion.com/leap-0.6.4.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<head>
+	<style>
+		.highlight{border:5px red solid !important;}
+		#slide{background-color:white; float:left; width:100%; height:100%;}
+		.grid div {width:100px; height:100px; float:left; border:5px black solid;}
+		*{font-size:100px;}
+	</style>
+</head>
+<body>
+	<div id="message">Start</div>
+	<div>Main : <span id="hand"></span></div>
+	<div>Doigt : <span id="finger"></span></div>
+	<div id="error"></div>
+	<div id="count"></div>
+</body>
+<script>
+	var count = 0;
+	fingerArray = ['pouce', 'index', 'majeur', 'auriculaire', 'annulaire']
+	Leap.loop(function(frame){
+		if(frame.fingers.length > 0){
+
+			for(key in frame.fingers){
+				var finger = frame.fingers[key]
+				if(finger.extended){
+					var hand = frame.hands[0].type; // right or left
+					var fingerType = finger.type;
+
+					switch(count){
+						case 0:
+							if(hand == "right" && fingerType == 1){
+								count++;
+							}
+							break;
+						case 1:
+							if(hand == "left" && fingerType == 1){
+								count++;
+							}
+							else if(hand == "right" && fingerType == 1){
+
+							}
+							else{
+								count = 0;
+								$('#error').html('fail');
+							}
+							break;
+						case 2:
+							if(hand == "right" && fingerType == 0){
+								count++;
+							}
+							else if(hand == "left" && fingerType == 1){
+
+							}
+							else{
+								count = 0;
+								$('#error').html('fail');
+							}
+							break;
+						case 3:
+							console.log(fingerType);
+							if(hand == "right" && fingerType == 4){
+								$('#error').html('success');
+								count++;
+							}
+							else if(hand == "right" && fingerType == 0){
+
+							}
+							else{
+								count = 0;
+								$('#error').html('fail');
+							}
+							break;
+						default:
+							break;
+					}
+					$('#hand').html(hand);
+					$('#finger').html(fingerArray[fingerType]);
+					$('#count').html(count);
+
+				}
+			}
+		}
+	})
+</script>
+</html>
